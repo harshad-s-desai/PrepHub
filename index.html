@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placement Preparation Hub</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div id="login-container" class="login-wrapper">
+        <div class="login-box">
+            <div class="logo login-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>PrepHub</h2>
+            </div>
+            <p class="login-subtitle">Enter your details to start your personalized preparation journey.</p>
+            
+            <form id="login-form" class="spaced-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="login-name" class="form-control" required placeholder="e.g.Bruce Wayne">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="login-email" class="form-control" required placeholder="name@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="tel" id="login-contact" class="form-control" pattern="[0-9]{10}" placeholder="10-digit mobile number" required>
+                </div>
+                <div class="form-group">
+                    <label>Current Education Status</label>
+                    <select id="login-education" class="form-control" required>
+                        <option value="" disabled selected>Select your status</option>
+                        <option value="1st Year">1st Year Student</option>
+                        <option value="2nd Year">2nd Year Student</option>
+                        <option value="3rd Year">3rd Year Student</option>
+                        <option value="4th Year">4th Year Student</option>
+                        <option value="Graduate">Graduate / Alumni</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn">Enter Hub</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app-container" style="display: none; width: 100%; height: 100%;">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h2>PrepHub</h2>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-item active" data-target="home"><i class="fas fa-compass"></i> Home</button>
+                <button class="nav-item" data-target="dashboard"><i class="fas fa-chart-pie"></i> Dashboard</button>
+                <button class="nav-item" data-target="my-track"><i class="fas fa-road"></i> My Track</button>
+                <button class="nav-item" data-target="companies"><i class="fas fa-building"></i> Companies</button>
+                <button class="nav-item" data-target="aptitude"><i class="fas fa-brain"></i> Aptitude</button>
+                <button class="nav-item" data-target="settings"><i class="fas fa-cog"></i> Settings</button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="mobile-toggle" aria-label="Open menu" tabindex="0"><i class="fas fa-bars"></i></div>
+                <div class="topbar-nav" id="top-nav-links">
+                    <span class="active" data-target="home">Home</span>
+                    <span data-target="dashboard">Dashboard</span>
+                    <span data-target="my-track">My Track</span>
+                    <span data-target="companies">Companies</span>
+                </div>
+                <div class="topbar-right">
+                    <button id="theme-toggle" class="icon-btn" title="Toggle theme" aria-label="Toggle dark mode"><i class="fas fa-moon"></i></button>
+                    <div class="profile-info">
+                        <div class="avatar"><i class="fas fa-user"></i></div>
+                        <div class="user-details">
+                            <span id="display-name">Student</span>
+                            <small id="display-role">Target Role</small>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Home -->
+            <section id="home" class="page-section active">
+                <div class="welcome-header">
+                    <h1 id="home-greeting">Welcome, Student!</h1>
+                    <p>Here is your personalized placement preparation overview.</p>
+                </div>
+                
+                <div class="dashboard-grid home-layout">
+                    <div class="home-main-col">
+                        <div class="card insight-card no-margin-bottom">
+                            <h3><i class="fas fa-lightbulb"></i> Tip of the Day</h3>
+                            <p class="mt-2">Consistency beats intensity. Solving 2 problems and revising 1 core concept daily is significantly more effective than cramming before an interview.</p>
+                        </div>
+
+                        <!-- Recommendations based on Target Role -->
+                        <div class="card purple-card no-margin-bottom mt-4">
+                            <h3><i class="fas fa-bullseye"></i> High-Yield Focus for: <span id="rec-role-title">Software Engineer / SDE</span></h3>
+                         <p class="mt-2 text-sm opacity-80" id="rec-role-desc">Key modules for your desired post. Complete all topics in <strong>My Track</strong> to maximize placement readiness:</p>
+                         <ul id="recommended-topics-list" class="skill-tags mt-4"></ul>
+                        </div>
+                        
+                        <div class="card mt-4">
+                            <h3 class="mb-4">Quick Navigation</h3>
+                            <div class="company-grid quick-start-grid">
+                                <div class="company-card quick-card" onclick="navigateTo('my-track')">
+                                    <i class="fas fa-road icon"></i>
+                                    <h4>Resume Track</h4>
+                                </div>
+                                <div class="company-card quick-card" onclick="navigateTo('dashboard')">
+                                    <i class="fas fa-chart-line icon dev-icon"></i>
+                                    <h4>View Analytics</h4>
+                                </div>
+                                <div class="company-card quick-card" onclick="navigateTo('companies')">
+                                    <i class="fas fa-building icon cs-icon"></i>
+                                    <h4>Companies Prep</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="home-side-col">
+                        <div class="card">
+                            <h3><i class="fas fa-id-card"></i> Your Profile</h3>
+                            <div class="profile-details mt-4">
+                                <p><strong>Name:</strong> <span id="profile-name"></span></p>
+                                <p><strong>Target Post:</strong> <span id="profile-role"></span></p>
+                                <p><strong>Education:</strong> <span id="profile-edu"></span></p>
+                                <p><strong>Email:</strong> <span id="profile-email"></span></p>
+                                <p><strong>Contact:</strong> <span id="profile-contact"></span></p>
+                            </div>
+                            <button class="btn btn-primary full-width mt-4" onclick="navigateTo('settings')">Edit Profile & Target Post</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dashboard -->
+            <section id="dashboard" class="page-section">
+                <div class="welcome-header">
+                    <h1>Performance Analytics</h1>
+                    <p>Track your technical progression dynamically based on your Target Post.</p>
+                </div>
+                
+                <div class="stats-grid" style="grid-template-columns: 2fr 1fr; margin-bottom: 24px;">
+                    <div class="stat-card insight-card">
+                        <div class="stat-header"><h3>Overall Readiness</h3><i class="fas fa-chart-line"></i></div>
+                        <div class="stat-value" id="stat-readiness">0%</div>
+                        <div class="progress-bar"><div class="progress-fill" id="bar-readiness" style="width: 0%"></div></div>
+                    </div>
+                    <div class="stat-card yellow-card">
+                        <div class="stat-header"><h3>Study Streak</h3><i class="fas fa-fire"></i></div>
+                        <div class="stat-value"><span id="stat-streak">0</span> Days</div>
+                        <p class="stat-subtext">Keep building momentum!</p>
+                    </div>
+                </div>
+
+                <h3 class="mb-4">Role-Specific Module Progress</h3>
+                <div class="stats-grid" id="dynamic-stats-grid"></div>
+
+                <div class="dashboard-grid mt-4">
+                    <div class="card">
+                        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3 style="margin: 0;"><i class="fas fa-check-square"></i> Today's Goals</h3>
+                            <button class="icon-btn" onclick="addGoal()" aria-label="Add new goal" style="color: var(--primary);"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="goals-list mt-4" id="goals-container" style="display: flex; flex-direction: column; gap: 12px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dynamic My Track -->
+            <section id="my-track" class="page-section">
+                <div class="section-header">
+                    <h2>Role Syllabus: <span id="track-role-title" class="text-primary"></span></h2>
+                    <p class="text-muted mt-2">Track completion across all prerequisite skills. Each completed checkbox automatically boosts your readiness score.</p>
+                </div>
+                <div id="dynamic-track-container"></div>
+            </section>
+
+            <!-- Companies Section -->
+            <section id="companies" class="page-section">
+                <div class="section-header">
+                    <h2>Target Companies Database</h2>
+                    <p class="text-muted mt-2">Comprehensive hiring criteria for premier Indian IT leaders, high-growth Indian tech product companies, and global giants.</p>
+                </div>
+
+                <!-- Important Notice Banner -->
+                <div class="notice-card mb-4">
+                    <div class="notice-icon"><i class="fas fa-info-circle"></i></div>
+                    <div class="notice-content">
+                        <h4>Preparation Guidance Note</h4>
+                        <p>These topics highlight the most critical and frequently tested assessment areas for each company. Exact criteria vary by hiring season, branch, and role seniority. Ensure you thoroughly prepare all standard modules from <strong>My Track</strong> while prioritizing these key focus areas.</p>
+                    </div>
+                </div>
+
+                <!-- Filter & Search Bar -->
+                <div class="filter-bar card mb-4">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="company-search-input" placeholder="Search companies by name or skill..." oninput="filterCompanies()">
+                    </div>
+                    <div class="category-filters">
+                        <button class="filter-pill active" data-filter="all" onclick="setCompanyFilter('all', this)">All (17)</button>
+                        <button class="filter-pill" data-filter="India Tech" onclick="setCompanyFilter('India Tech', this)">Indian Product</button>
+                        <button class="filter-pill" data-filter="IT Services" onclick="setCompanyFilter('IT Services', this)">IT Services</button>
+                        <button class="filter-pill" data-filter="Global Product" onclick="setCompanyFilter('Global Product', this)">Global Product</button>
+                        <button class="filter-pill" data-filter="FinTech / Consulting" onclick="setCompanyFilter('FinTech / Consulting', this)">FinTech & Consulting</button>
+                    </div>
+                </div>
+
+                <div class="company-grid" id="company-grid-container"></div>
+            </section>
+
+            <!-- Aptitude Practice -->
+            <section id="aptitude" class="page-section">
+                <div class="section-header">
+                    <h2>General Aptitude & Reasoning</h2>
+                    <p class="text-muted mt-2">Essential quantitative, logical, and verbal practice modules standard across technical screening tests.</p>
+                </div>
+                <div class="card">
+                    <table class="data-table">
+                        <thead><tr><th>Status</th><th>Topic</th><th>Category</th></tr></thead>
+                        <tbody id="aptitude-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Settings -->
+            <section id="settings" class="page-section">
+                <h2>Settings & Profile</h2>
+                <div class="card settings-card mt-4">
+                    <form id="settings-form" class="spaced-form">
+                        <div class="form-group">
+                            <label>Display Name</label>
+                            <input type="text" id="setting-name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="setting-email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number</label>
+                            <input type="tel" id="setting-contact" class="form-control" pattern="[0-9]{10}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Desired Post (Target Role)</label>
+                            <select id="setting-role" class="form-control" required>
+                                <option value="" disabled selected>Select your target role</option>
+                                <option value="Software Engineer / SDE">Software Engineer / SDE</option>
+                                <option value="Full Stack Developer">Full Stack Developer</option>
+                                <option value="Backend Developer">Backend Developer</option>
+                                <option value="Frontend Developer">Frontend Developer</option>
+                                <option value="Data Analyst">Data Analyst</option>
+                                <option value="Data Scientist">Data Scientist</option>
+                                <option value="AI / ML Engineer">AI / ML Engineer</option>
+                                <option value="Cloud / DevOps Engineer">Cloud / DevOps Engineer</option>
+                                <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+                                <option value="QA / Automation Engineer">QA / Automation Engineer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Education Status</label>
+                            <select id="setting-edu" class="form-control" required>
+                                <option value="1st Year">1st Year Student</option>
+                                <option value="2nd Year">2nd Year Student</option>
+                                <option value="3rd Year">3rd Year Student</option>
+                                <option value="4th Year">4th Year Student</option>
+                                <option value="Graduate">Graduate / Alumni</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary submit-btn">Save Settings & Update Track</button>
+                    </form>
+                    <hr class="divider">
+                    <div class="button-group">
+                        <button id="logout-btn" type="button" class="btn btn-secondary">Log Out</button>
+                        <button id="reset-data-btn" type="button" class="btn btn-danger">Reset All Progress</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Company Detail Modal -->
+    <div id="company-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <i id="modal-company-icon" class="fab fa-building" style="font-size: 26px; color: var(--primary);"></i>
+                    <h2 id="modal-company-name">Company Name</h2>
+                </div>
+                <button class="close-btn" onclick="closeModal('company-modal')" aria-label="Close modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="company-meta mb-4">
+                    <span class="badge blue-card" id="modal-company-type">Category</span>
+                    <span class="badge" id="modal-company-diff">Difficulty</span>
+                    <span class="badge yellow-card" id="modal-company-origin">Region</span>
+                </div>
+                
+                <p class="text-muted text-sm mb-4" id="modal-company-desc"></p>
+
+                <h3 style="font-size: 17px; margin-bottom: 8px;">Key Evaluated Posts & Requirements</h3>
+                <p class="text-sm text-muted mb-4"><i class="fas fa-hand-pointer"></i> <strong>Click any skill tag below</strong> to inspect its full step-by-step preparation roadmap.</p>
+                <div id="modal-roles-container" class="roles-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skill Roadmap Modal -->
+    <div id="roadmap-modal" class="modal-overlay" style="z-index: 2050;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-map-signs" style="color: var(--primary); margin-right: 8px;"></i> <span id="roadmap-title">Topic</span> Roadmap</h2>
+                <button class="close-btn" onclick="closeModal('roadmap-modal')" aria-label="Close modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-sm text-muted mb-4">Recommended step-by-step progression milestones for mastering this domain:</p>
+                <div class="roadmap-timeline" id="roadmap-timeline-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
